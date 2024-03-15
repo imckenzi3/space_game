@@ -36,9 +36,7 @@ class BackgroundTile extends ParallaxComponent<PixelAdventure> {
 
     final background =
         //parallax background images goes here
-        await Flame.images.load('background/background_layer_1.png');
-    await Flame.images.load('background/background_layer_2.png');
-    await Flame.images.load('background/background_layer_3.png');
+        await Flame.images.load('background/background.png');
 
     parallax = Parallax([
       ParallaxLayer(

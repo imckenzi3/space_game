@@ -54,7 +54,7 @@ class PixelAdventure extends FlameGame
     cam.viewfinder.anchor = Anchor.topLeft;
 
     // load cam first then world
-    addAll([cam, world, BackgroundTile()]);
+    addAll([cam, world]);
 
     if (showControls) {
       // add joyStick
