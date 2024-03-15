@@ -6,6 +6,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 // import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/services.dart';
+import 'package:pixel_adventure/components/door.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/coin.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
@@ -61,6 +62,9 @@ class Player extends SpriteAnimationGroupComponent
 
   // got hit
   bool gotHit = false;
+
+  // check if over door
+  bool overDoor = false;
 
   static const double bounceForce = -200; // Adjust as needed
 
@@ -162,6 +166,9 @@ class Player extends SpriteAnimationGroupComponent
       Set<Vector2> intersectionPoints, PositionComponent other) {
     // if collide with coin
     if (other is Coin) other.collidedWithPlayer();
+
+    // if over door
+    if (other is Door && !overDoor) _overDoor();
 
     // if collide with saw
     if (other is Saw) _respawn();
@@ -400,5 +407,21 @@ class Player extends SpriteAnimationGroupComponent
 
     //   Future.delayed(appearingDuration, () {});
     // });
+  }
+
+  // when player over door
+  void _overDoor() {
+    overDoor = true;
+    // press e to open door
+
+    // show text if over door
+    openDoor = TextComponent(
+      text: 'Open Door',
+      priority: 10,
+      // open location
+      position: Vector2(0, -25),
+    );
+    openDoor.anchor = Anchor.topLeft;
+    add(openDoor);
   }
 }
