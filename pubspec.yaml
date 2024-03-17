@@ -65,6 +65,7 @@ flutter:
   assets:
     - assets/tiles/
     - assets/images/background/
+    - assets/images/background/spaceShip.png
     - assets/images/oak_woods_tileset.png
     - assets/images/character/idle.png
     - assets/images/character/running.png

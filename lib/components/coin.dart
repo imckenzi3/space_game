@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';

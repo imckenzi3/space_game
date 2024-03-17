@@ -37,7 +37,7 @@ class PixelAdventure extends FlameGame
   Vector2 fixedResolution = Vector2(650, 360);
 
   // list of levels we have
-  List<String> levelNames = ['level-01', 'level-02', 'level-03'];
+  List<String> levelNames = ['level-01', 'level-02', 'level-03', 'level-04'];
 
   // ref to level we are on
   int currentLevelIndex = 0;

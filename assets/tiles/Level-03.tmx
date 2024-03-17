@@ -27,7 +27,6 @@
 </data>
  </layer>
  <objectgroup id="4" name="Collisions">
-  <object id="51" x="768" y="336"/>
   <object id="64" x="-24" y="288" width="696" height="48"/>
   <object id="66" x="672" y="0" width="24" height="336"/>
   <object id="71" type="Platform" x="48" y="168" width="24" height="24"/>
