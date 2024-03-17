@@ -160,23 +160,24 @@ class Player extends SpriteAnimationGroupComponent
     // jump - if played pressed space, hasJumped = true
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
 
-    // open door
+    // open door - shouldnt b here
     openDoor = keysPressed.contains(LogicalKeyboardKey.keyW) ||
         keysPressed.contains(LogicalKeyboardKey.arrowUp);
 
-    // particle if moving?
+    // particle - shouldnt b here
     final particleComponent = ParticleSystemComponent(
       priority: 1,
       particle: Particle.generate(
-        count: 5,
+        count: 1,
         lifespan: 0.1,
         generator: (i) => AcceleratedParticle(
           acceleration: getRandomVector(),
           speed: getRandomVector(),
-          position: (position.clone() + position.clone()),
+          // position: (position.clone() + Vector2(0, size.y / 3)),
+          position: Vector2(25, 45),
           child: CircleParticle(
             radius: 1,
-            paint: Paint()..color = Colors.white,
+            paint: Paint()..color = Color.fromARGB(255, 148, 47, 27),
           ),
         ),
       ),
@@ -483,4 +484,16 @@ class Player extends SpriteAnimationGroupComponent
 
     return (Vector2.random(_random) - Vector2(0.5, -1)) * 200;
   }
+
+  // jett boots
+  // Holds an object of Random class to generate random numbers.
+  // final _random = Random();
+
+  // Vector2 getRandomVector() {
+  //   // This method generates a random vector such that
+  //   // its x component lies between [-100 to 100] and
+  //   // y component lies between [200, 400]
+
+  //   return (Vector2.random(_random) - Vector2(0.5, -1)) * 200;
+  // }
 }
