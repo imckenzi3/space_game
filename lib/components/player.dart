@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bonfire/bonfire.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/foundation.dart';
@@ -21,7 +22,8 @@ class Player extends SpriteAnimationGroupComponent
   String character;
 
   // if no character set default to character
-  Player({position, this.character = 'character'}) : super(position: position);
+  Player({position, this.character = 'character', Lighting})
+      : super(position: position);
 
   final double stepTime = 0.1;
   late final SpriteAnimation idleAnimation;
