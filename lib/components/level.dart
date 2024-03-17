@@ -14,7 +14,10 @@ class Level extends World with HasGameRef<PixelAdventure> {
   final String levelName;
   final Player player;
 
+  // level
   Level({required this.levelName, required this.player});
+
+  // tiles
   late TiledComponent level;
 
   // Collisions
@@ -22,7 +25,8 @@ class Level extends World with HasGameRef<PixelAdventure> {
 
   @override
   FutureOr<void> onLoad() async {
-    level = await TiledComponent.load('level-01.tmx', Vector2.all(24));
+    // calls the level - was spawning level 1 each time
+    level = await TiledComponent.load('$levelName.tmx', Vector2.all(24));
 
     // add level to game
     add(level);

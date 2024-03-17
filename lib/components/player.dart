@@ -1,10 +1,9 @@
 import 'dart:async';
-// import 'dart:html';
-// import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-// import 'package:flame_tiled/flame_tiled.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pixel_adventure/components/door.dart';
 import 'package:pixel_adventure/components/saw.dart';
@@ -12,7 +11,6 @@ import 'package:pixel_adventure/components/coin.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
 import 'package:pixel_adventure/components/utils.dart';
-// import 'package:flutter/src/services/hardware_keyboard.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
 // player state - allows us to give different states that we can call later
@@ -66,6 +64,9 @@ class Player extends SpriteAnimationGroupComponent
   // check if over door
   bool overDoor = false;
 
+  // open door
+  bool openDoor = false;
+
   static const double bounceForce = -200; // Adjust as needed
 
   List<CollisionBlock> collisionBlocks = [];
@@ -78,6 +79,8 @@ class Player extends SpriteAnimationGroupComponent
   // dont want player to be able to jump higher due to higher or lower frame rate
   double fixDeltaTime = 1 / 60; // target 60 fps
   double accumaltedTime = 0;
+
+  get keysPressed => null;
 
   // make player move
   // best way: make var = velocity, change velocty and set to player position
@@ -155,6 +158,10 @@ class Player extends SpriteAnimationGroupComponent
     // jump - if played pressed space, hasJumped = true
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
 
+    // open door
+    openDoor = keysPressed.contains(LogicalKeyboardKey.keyW) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowUp);
+
     return super.onKeyEvent(event, keysPressed);
   }
 
@@ -167,7 +174,7 @@ class Player extends SpriteAnimationGroupComponent
     // if collide with coin
     if (other is Coin) other.collidedWithPlayer();
 
-    // if over door
+    // if over door & something
     if (other is Door && !overDoor) _overDoor();
 
     // if collide with saw
@@ -181,8 +188,9 @@ class Player extends SpriteAnimationGroupComponent
       if (health <= 0) {
         health = 0;
       }
-      super.onCollisionStart(intersectionPoints, other);
     }
+
+    super.onCollisionStart(intersectionPoints, other);
   }
 
   // animations
@@ -409,19 +417,37 @@ class Player extends SpriteAnimationGroupComponent
     // });
   }
 
-  // when player over door
-  void _overDoor() {
+  // when player over doors
+  void _overDoor() async {
     overDoor = true;
-    // press e to open door
+    debugPrint('player collided');
 
-    // show text if over door
-    openDoor = TextComponent(
-      text: 'Open Door',
-      priority: 10,
-      // open location
-      position: Vector2(0, -25),
-    );
-    openDoor.anchor = Anchor.topLeft;
-    add(openDoor);
+    // check if player is over door and player pressed w to go to next room
+
+    // player has to press space and w to go to next room - fix later
+    if (overDoor = true && openDoor) {
+      // goto next level
+      debugPrint('player  pressed w');
+
+      // when player opens door - moving rooms + spawn new room
+      overDoor = false;
+
+      // fake make player gone
+      position = Vector2.all(-640);
+
+      // delay to change next level - be carful to not change levels to fast
+      const waitToChangeduration = Duration(seconds: 3);
+      Future.delayed(waitToChangeduration, () => {game.loadNextLevel()});
+    }
+
+    // if (overDoor = true) {
+    //   // load next level if w pressed
+    //   if (openDoor = true) {
+    //     debugPrint('player collided and open door');
+
+    //     // load new level
+    //   }
+    //   overDoor = false;
+    //}
   }
 }

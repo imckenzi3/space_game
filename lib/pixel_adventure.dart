@@ -6,7 +6,6 @@ import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/painting.dart';
-import 'package:pixel_adventure/components/background_tile.dart';
 import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/level.dart';
@@ -18,7 +17,8 @@ class PixelAdventure extends FlameGame
         DragCallbacks,
         HasCollisionDetection,
         TapCallbacks {
-  late final CameraComponent cam;
+  // camera
+  late CameraComponent cam;
   Player player = Player(character: 'character');
 
   // create joystick
@@ -36,25 +36,20 @@ class PixelAdventure extends FlameGame
   // Returns the size of the playable area of the game window.
   Vector2 fixedResolution = Vector2(650, 360);
 
+  // list of levels we have
+  List<String> levelNames = ['level-01', 'level-02', 'level-03'];
+
+  // ref to level we are on
+  int currentLevelIndex = 0;
+
   @override
   FutureOr<void> onLoad() async {
     // load all images into chache
     // if alot of images can cause issues.
     await images.loadAllImages();
 
-    @override
-    final world = Level(
-      player: player,
-      levelName: 'level-01.tmx',
-    );
-
-    // creates cam component w/ fix resolution
-    cam = CameraComponent.withFixedResolution(
-        world: world, width: 650, height: 360);
-    cam.viewfinder.anchor = Anchor.topLeft;
-
-    // load cam first then world
-    addAll([cam, world]);
+    // call when we want to goto next level
+    _loadlevel();
 
     if (showControls) {
       // add joyStick
@@ -85,7 +80,7 @@ class PixelAdventure extends FlameGame
       text: 'Health: 100%',
 
       // health bar location
-      position: Vector2(size.x - 10, 10),
+      position: Vector2(size.x - 40, 25),
       textRenderer: TextPaint(
         style: const TextStyle(
           color: Colors.white,
@@ -168,8 +163,57 @@ class PixelAdventure extends FlameGame
 
     // draw rectangle
     canvas.drawRect(
-      Rect.fromLTWH(size.x - 100, 10, player.health.toDouble(), 10),
+      Rect.fromLTWH(size.x - 126, 10, player.health.toDouble(), 10),
       Paint()..color = Colors.green,
     );
+  }
+
+  void loadNextLevel() {
+    removeWhere((component) => component is Level);
+    // increase level
+    if (currentLevelIndex < levelNames.length - 1) {
+      currentLevelIndex++;
+
+      debugPrint('$currentLevelIndex: Current level');
+
+      _loadlevel();
+    } else {
+      // no more levels
+      currentLevelIndex = 0;
+      _loadlevel();
+    }
+  }
+
+  void _loadlevel() {
+    Future.delayed(
+        const Duration(
+          seconds: 2,
+        ), () {
+      Level world = Level(
+        player: player,
+        levelName: levelNames[currentLevelIndex],
+      );
+
+      // creates cam component w/ fix resolution
+      cam = CameraComponent.withFixedResolution(
+          world: world, width: 650, height: 360);
+      cam.viewfinder.anchor = Anchor.topLeft;
+
+      // load cam first then world
+      addAll([cam, world]);
+    });
+    // @override
+    // final world = Level(
+    //   player: player,
+    //   levelName: levelNames[currentLevelIndex],
+    // );
+
+    // // creates cam component w/ fix resolution
+    // cam = CameraComponent.withFixedResolution(
+    //     world: world, width: 650, height: 360);
+    // cam.viewfinder.anchor = Anchor.topLeft;
+
+    // // load cam first then world
+    // addAll([cam, world]);
   }
 }
