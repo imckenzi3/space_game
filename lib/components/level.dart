@@ -26,7 +26,8 @@ class Level extends World with HasGameRef<PixelAdventure> {
   @override
   FutureOr<void> onLoad() async {
     // calls the level - was spawning level 1 each time
-    level = await TiledComponent.load('$levelName.tmx', Vector2.all(24));
+    level = await TiledComponent.load('$levelName.tmx', Vector2.all(24),
+        priority: -1);
 
     // add level to game
     add(level);

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flame/collisions.dart';
@@ -162,6 +163,26 @@ class Player extends SpriteAnimationGroupComponent
     // open door
     openDoor = keysPressed.contains(LogicalKeyboardKey.keyW) ||
         keysPressed.contains(LogicalKeyboardKey.arrowUp);
+
+    // particle if moving?
+    final particleComponent = ParticleSystemComponent(
+      priority: 1,
+      particle: Particle.generate(
+        count: 5,
+        lifespan: 0.1,
+        generator: (i) => AcceleratedParticle(
+          acceleration: getRandomVector(),
+          speed: getRandomVector(),
+          position: (position.clone() + position.clone()),
+          child: CircleParticle(
+            radius: 1,
+            paint: Paint()..color = Colors.white,
+          ),
+        ),
+      ),
+    );
+
+    add(particleComponent);
 
     return super.onKeyEvent(event, keysPressed);
   }
@@ -450,5 +471,16 @@ class Player extends SpriteAnimationGroupComponent
     //   }
     //   overDoor = false;
     //}
+  }
+
+  // Holds an object of Random class to generate random numbers.
+  final _random = Random();
+
+  Vector2 getRandomVector() {
+    // This method generates a random vector such that
+    // its x component lies between [-100 to 100] and
+    // y component lies between [200, 400]
+
+    return (Vector2.random(_random) - Vector2(0.5, -1)) * 200;
   }
 }
