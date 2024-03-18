@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:js_interop';
 import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
@@ -14,6 +15,7 @@ import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
 import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
+import 'package:pixel_adventure/screens/game_over_menu.dart';
 
 // player state - allows us to give different states that we can call later
 enum PlayerState { idle, running, jumping, falling, hit, appearing, death }
@@ -427,6 +429,9 @@ class Player extends SpriteAnimationGroupComponent
     // if player health is zero and respawn set to 100
     if (gameRef.player.health <= 0) {
       gameRef.player.health = 100;
+      // overlays.add(GameOverMenu.ID);
+      // debugPrint('player died');
+      // player dies - display game over screen\
     }
 
     // position
@@ -477,6 +482,7 @@ class Player extends SpriteAnimationGroupComponent
   // Holds an object of Random class to generate random numbers.
   final _random = Random();
 
+  // particle effects when player moves
   Vector2 getRandomVector() {
     // This method generates a random vector such that
     // its x component lies between [-100 to 100] and
@@ -485,7 +491,7 @@ class Player extends SpriteAnimationGroupComponent
     return (Vector2.random(_random) - Vector2(0.5, -1)) * 200;
   }
 
-  // jett boots
+  // jett boots - looks great for jet boots
   // Holds an object of Random class to generate random numbers.
   // final _random = Random();
 
