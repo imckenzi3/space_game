@@ -12,7 +12,10 @@ void main() async {
   await Flame.device.fullScreen();
   await Flame.device.setLandscape();
 
+  // Runs game normally
   // runApp(GameWidget(game: kDebugMode ? PixelAdventure() : game));
+
+  // Runs game through menu screens
   runApp(
       const MaterialApp(debugShowCheckedModeBanner: false, home: MainMenu()));
 }

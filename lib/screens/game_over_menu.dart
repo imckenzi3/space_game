@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pixel_adventure/screens/custom_button.dart';
 
 class GameOverMenu extends StatelessWidget {
   static const String ID = 'GameOverMenu';
@@ -43,7 +42,7 @@ class GameOverMenu extends StatelessWidget {
                 //     btnColor: Colors.blue,
                 //     onTap: ,),
                 child: ElevatedButton(
-                    onPressed: () {}, child: Text("Change Color")),
+                    onPressed: () {}, child: const Text("Change Color")),
               ),
             ],
           ),
