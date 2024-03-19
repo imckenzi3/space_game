@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:js_interop';
 import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pixel_adventure/components/door.dart';
@@ -15,7 +12,7 @@ import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/custom_hitbox.dart';
 import 'package:pixel_adventure/components/utils.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
-import 'package:pixel_adventure/screens/game_over_menu.dart';
+// import 'package:pixel_adventure/screens/game_over_menu.dart';
 
 // player state - allows us to give different states that we can call later
 enum PlayerState { idle, running, jumping, falling, hit, appearing, death }

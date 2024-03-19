@@ -6,7 +6,7 @@ class GameOverMenu extends StatelessWidget {
   static const String ID = 'GameOverMenu';
 
   // ref to game
-  final GiftGrabGame gameRef;
+  final Pixeladventure gameRef;
 
   const GameOverMenu({super.key, required this.gameRef});
 
@@ -36,25 +36,15 @@ class GameOverMenu extends StatelessWidget {
               SizedBox(
                 width: 400,
                 height: 100,
-                // child: ElevatedButton{
-                //   onPressed: (){
-                //     debugPrint('btn pressed');
-                //   },
-                //   child: const Text(
-                //     'Play Again?',
-                //     style: TextStyle(
-                //       fontSize: 50,
-                //     ),
-                //   ),
-                // },
+                // child: ElevatedButton(onPressed: onPressed, child: child),
               ),
             ],
           ),
         ),
       ),
     );
-    return Container();
+    // return Container();
   }
 }
 
-class GiftGrabGame {}
+class Pixeladventure {}
