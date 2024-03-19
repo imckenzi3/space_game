@@ -1,6 +1,5 @@
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+import 'package:pixel_adventure/screens/custom_button.dart';
 
 class GameOverMenu extends StatelessWidget {
   static const String ID = 'GameOverMenu';
@@ -9,6 +8,8 @@ class GameOverMenu extends StatelessWidget {
   final Pixeladventure gameRef;
 
   const GameOverMenu({super.key, required this.gameRef});
+
+  get child => null;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class GameOverMenu extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: const Center(
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -36,7 +37,13 @@ class GameOverMenu extends StatelessWidget {
               SizedBox(
                 width: 400,
                 height: 100,
-                // child: ElevatedButton(onPressed: onPressed, child: child),
+                // child: CustomButton(
+                //     btnText: ("Start Game"),
+                //     btnTextColor: Colors.black,
+                //     btnColor: Colors.blue,
+                //     onTap: ,),
+                child: ElevatedButton(
+                    onPressed: () {}, child: Text("Change Color")),
               ),
             ],
           ),
@@ -44,6 +51,10 @@ class GameOverMenu extends StatelessWidget {
       ),
     );
     // return Container();
+  }
+
+  void onTap() {
+    debugPrint('btn pressed');
   }
 }
 

@@ -12,10 +12,10 @@ class GamePlay<String> extends StatelessWidget {
   Widget build(BuildContext context) {
     return GameWidget(
       game: _pixelAdventure,
-      // overlayBuilderMap: {
-      //   GameOverMenu.ID: (BuildContext context, PixelAdventure gameRef) =>
-      //       // GameOverMenu(gameRef: gameRef),
-      // },
+      overlayBuilderMap: {
+        GameOverMenu.ID: (BuildContext context, PixelAdventure gameRef) =>
+            GameOverMenu(gameRef: Pixeladventure()),
+      },
     );
   }
 }

@@ -1,14 +1,18 @@
-import 'package:flame/game.dart';
+// ignore_for_file: use_super_parameters
+
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
 class MainMenu extends StatelessWidget {
   static const String ID = 'MainMenu';
 
-  // ref to game
-  final Pixeladventure gameRef;
+  const MainMenu({super.key});
 
-  const MainMenu({super.key, required this.gameRef});
+  // ref to game
+  // final Pixeladventure gameRef;
+
+  // const MainMenu({super.key, required this.gam eRef});
+
+  // const MainMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,7 @@ class MainMenu extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/main_menu.riv"),
+            image: AssetImage("images/main_menu.riv"),
             fit: BoxFit.cover,
           ),
         ),
@@ -27,7 +31,7 @@ class MainMenu extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 50),
                 child: Text(
-                  'Game Over',
+                  'Main Menu',
                   style: TextStyle(
                     fontSize: 100,
                   ),
@@ -36,6 +40,9 @@ class MainMenu extends StatelessWidget {
               SizedBox(
                 width: 400,
                 height: 100,
+                // child: ElevatedButton(
+                //   onPressed: () => gameRef, child: Text('elevated btn')),
+                // ),
               ),
             ],
           ),
