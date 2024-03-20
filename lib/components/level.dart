@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:pixel_adventure/components/door.dart';
-import 'package:pixel_adventure/components/dungeon.dart';
+import 'package:pixel_adventure/components/dungeonDoor.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/coin.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
@@ -42,9 +42,6 @@ class Level extends World with HasGameRef<PixelAdventure> {
 
     // add object collisions
     _addCollisions();
-
-    // Generate Random Dungeon
-    _generateRandomCollisions();
 
     return super.onLoad();
   }
@@ -122,6 +119,13 @@ class Level extends World with HasGameRef<PixelAdventure> {
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
             add(door);
+          // spawn dungeon door
+          case 'Dungeon':
+            final dungeon = DungeonDoor(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+            add(dungeon);
           default:
         }
       }
@@ -155,36 +159,6 @@ class Level extends World with HasGameRef<PixelAdventure> {
             );
             collisionBlocks.add(block);
             add(block);
-        }
-      }
-    }
-
-    player.collisionBlocks = collisionBlocks;
-  }
-
-  // generate random dungeon collisions
-  // add object collisions randomly
-  void _generateRandomCollisions() {
-    // Randomly generate collisions
-    final Random random = Random();
-
-    // final mapSize = level.tileMap.size;
-
-    // Define the probability of a tile being a collision block
-    final collisionProbability = 0.2;
-
-    for (var y = 0; y < 32; y++) {
-      for (var x = 0; x < 32; x++) {
-        // Randomly determine if this tile should be a collision block
-        if (random.nextDouble() < collisionProbability) {
-          final position = Vector2(x.toDouble() * 24, y.toDouble() * 24);
-          final size = Vector2(24, 24);
-          final block = CollisionBlock(
-            position: position,
-            size: size,
-          );
-          collisionBlocks.add(block);
-          add(block);
         }
       }
     }

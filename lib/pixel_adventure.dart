@@ -174,7 +174,8 @@ class PixelAdventure extends FlameGame
     if (currentLevelIndex < levelNames.length - 1) {
       currentLevelIndex++;
 
-      debugPrint('$currentLevelIndex: Current level');
+      // prints current level
+      debugPrint('Current level: $currentLevelIndex');
 
       _loadlevel();
     } else {

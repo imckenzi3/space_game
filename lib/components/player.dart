@@ -6,6 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pixel_adventure/components/door.dart';
+import 'package:pixel_adventure/components/dungeonDoor.dart';
 import 'package:pixel_adventure/components/saw.dart';
 import 'package:pixel_adventure/components/coin.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
@@ -65,8 +66,14 @@ class Player extends SpriteAnimationGroupComponent
   // check if over door
   bool overDoor = false;
 
+  // check if over dungeon door
+  bool overDungeonDoor = false;
+
   // open door
   bool openDoor = false;
+
+// open dungeon door
+  bool openDungeonDoor = false;
 
   static const double bounceForce = -200; // Adjust as needed
 
@@ -163,6 +170,10 @@ class Player extends SpriteAnimationGroupComponent
     openDoor = keysPressed.contains(LogicalKeyboardKey.keyW) ||
         keysPressed.contains(LogicalKeyboardKey.arrowUp);
 
+    // open dungeon door - should b here?
+    openDungeonDoor = keysPressed.contains(LogicalKeyboardKey.keyW) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowUp);
+
     // particle - shouldnt b here
     final particleComponent = ParticleSystemComponent(
       priority: 1,
@@ -198,6 +209,9 @@ class Player extends SpriteAnimationGroupComponent
 
     // if over door & something
     if (other is Door && !overDoor) _overDoor();
+
+    // // if over dungeondoor & something
+    if (other is DungeonDoor && !overDungeonDoor) _overDungeonDoor();
 
     // if collide with saw
     if (other is Saw) _respawn();
@@ -461,6 +475,39 @@ class Player extends SpriteAnimationGroupComponent
       position = Vector2.all(-640);
 
       // delay to change next level - be carful to not change levels to fast
+      const waitToChangeduration = Duration(seconds: 3);
+      Future.delayed(waitToChangeduration, () => {game.loadNextLevel()});
+    }
+
+    // if (overDoor = true) {
+    //   // load next level if w pressed
+    //   if (openDoor = true) {
+    //     debugPrint('player collided and open door');
+
+    //     // load new level
+    //   }
+    //   overDoor = false;
+    //}
+  }
+
+  void _overDungeonDoor() async {
+    overDungeonDoor = true;
+    debugPrint('player collided with dungeon door');
+
+    // check if player is over door and player pressed w to go to next room
+
+    // player has to press space and w to go to next room - fix later
+    if (overDungeonDoor = true && openDungeonDoor) {
+      // goto next level
+      debugPrint('player open dunngeon door');
+
+      // when player opens door - moving rooms + spawn new room
+      overDungeonDoor = false;
+
+      // fake make player gone
+      position = Vector2.all(-640);
+
+      // goto starting dungeon level
       const waitToChangeduration = Duration(seconds: 3);
       Future.delayed(waitToChangeduration, () => {game.loadNextLevel()});
     }

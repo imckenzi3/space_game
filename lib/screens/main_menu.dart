@@ -1,7 +1,6 @@
 // ignore_for_file: use_super_parameters
 
 import 'package:flutter/material.dart';
-import 'package:pixel_adventure/screens/game_over_menu.dart';
 import 'package:pixel_adventure/screens/game_play.dart';
 
 class MainMenu extends StatelessWidget {
@@ -9,41 +8,41 @@ class MainMenu extends StatelessWidget {
 
   const MainMenu({super.key});
 
-  // MainMenu({super.key, required this.gameRef});
-
-  // ref to game
-  // final Pixeladventure gameRef;
-
-  // const MainMenu({super.key, required this.gam eRef});
-
-  // const MainMenu({Key? key}) : super(key: key);
+  // final palette = context.watch<Palette>();
+  // final gamesServicesController = context.watch<GamesServicesController?>();
+  // final settingsController = context.watch<SettingsController>();
+  // final audioController = context.watch<AudioController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // background color
+      backgroundColor: Colors.black,
       body: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("images/spaceShip.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
+            // image: DecorationImage(
+            //   image: AssetImage("spaceShip.png"),
+            //   fit: BoxFit.cover,
+            // ),
+            ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 50),
-                child: Text(
+                child: const Text(
                   'Main Menu',
                   style: TextStyle(
-                    fontSize: 100,
+                    fontFamily: 'Permanent Marker',
+                    fontSize: 55,
+                    height: 1,
                   ),
                 ),
               ),
               SizedBox(
-                width: 400,
-                height: 100,
+                width: 200,
+                height: 50,
                 child: ElevatedButton(
                     // have to call game_play will run the game
                     // onPressed: () => const GamePlay(),
