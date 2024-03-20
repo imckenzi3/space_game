@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/components.dart';
@@ -5,6 +6,9 @@ import 'package:pixel_adventure/pixel_adventure.dart';
 
 class DungeonGenerator extends SpriteAnimationComponent
     with HasGameRef<PixelAdventure> {
+  // need x, y, width, height - generate random levels - then add as collision blocks to game - then load
+
+  // create random levels
   List<List<String>> generateDungeon(int width, int height) {
     List<List<String>> dungeon =
         List.generate(height, (index) => List.generate(width, (index) => '.'));
@@ -32,8 +36,16 @@ class DungeonGenerator extends SpriteAnimationComponent
 
     return dungeon;
   }
+
+  // add random level to scene
+  @override
+  FutureOr<void> onLoad() {
+    // TODO: implement onLoad
+    return super.onLoad();
+  }
 }
 
+// test in debug
 void main() {
   DungeonGenerator generator = DungeonGenerator();
   List<List<String>> dungeon = generator.generateDungeon(30, 20);
