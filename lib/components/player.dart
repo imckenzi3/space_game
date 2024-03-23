@@ -410,7 +410,7 @@ class Player extends SpriteAnimationGroupComponent
 
   void _respawn() async {
 
-    // hit sound
+    //hit sound 
     if (game.playSounds)  FlameAudio.play('hit.wav', volume: game.soundVolume);
     // move duration
     const canMoveDuration = Duration(milliseconds: 400);
