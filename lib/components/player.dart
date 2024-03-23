@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pixel_adventure/components/door.dart';
@@ -408,6 +409,9 @@ class Player extends SpriteAnimationGroupComponent
   // let player move
 
   void _respawn() async {
+
+    // hit sound
+    if (game.playSounds)  FlameAudio.play('hit.wav', volume: game.soundVolume);
     // move duration
     const canMoveDuration = Duration(milliseconds: 400);
 
@@ -424,7 +428,7 @@ class Player extends SpriteAnimationGroupComponent
     scale.x = 1;
     position = startingPosition - Vector2.all(-20);
 
-    // animation
+    // animation gets rid of dewl
     current = PlayerState.appearing;
 
     await animationTicker?.completed;

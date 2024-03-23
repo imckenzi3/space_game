@@ -42,6 +42,10 @@ class PixelAdventure extends FlameGame
   // ref to level we are on
   int currentLevelIndex = 0;
 
+  // sounds
+  bool playSounds = false;
+  double soundVolume = 1.0;
+
   @override
   FutureOr<void> onLoad() async {
     // load all images into chache
@@ -180,6 +184,9 @@ class PixelAdventure extends FlameGame
       _loadlevel();
     } else {
       // no more levels
+
+      // when you get back to the end level
+      // goto the first level - no restarting game
       currentLevelIndex = 0;
       _loadlevel();
     }
