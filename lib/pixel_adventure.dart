@@ -43,7 +43,7 @@ class PixelAdventure extends FlameGame
   int currentLevelIndex = 0;
 
   // sounds
-  bool playSounds = false;
+  bool playSounds = true;
   double soundVolume = 1.0;
 
   @override
