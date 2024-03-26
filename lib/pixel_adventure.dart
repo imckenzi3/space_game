@@ -39,11 +39,15 @@ class PixelAdventure extends FlameGame
   // list of levels we have
   List<String> levelNames = ['level-01', 'level-02', 'level-03', 'level-04'];
 
+  // fill list of generatedNames with levels from randomly generated rooms
+  // player can then navigate random rooms
+  List<String> generatedNames = [];
+
   // ref to level we are on
   int currentLevelIndex = 0;
 
   // sounds
-  bool playSounds = true;
+  bool playSounds = false;
   double soundVolume = 1.0;
 
   @override

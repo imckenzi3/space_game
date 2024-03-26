@@ -53,6 +53,20 @@ class MainMenu extends StatelessWidget {
                     },
                     child: const Text('Load Game')),
               ),
+              // Testing Level Generation
+              SizedBox(
+                width: 200,
+                height: 50,
+                child: ElevatedButton(
+                    // have to call game_play will run the game
+                    // onPressed: () => const GamePlay(),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => GamePlay(),
+                      ));
+                    },
+                    child: const Text('Test Level Generation')),
+              ),
             ],
           ),
         ),
