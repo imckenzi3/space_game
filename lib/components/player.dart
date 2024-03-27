@@ -340,7 +340,7 @@ class Player extends SpriteAnimationGroupComponent
   void _playerJump(double dt) {
     // jump sound
     if (game.playSounds) FlameAudio.play('jump.wav', volume: game.soundVolume);
-    
+
     velocity.y = -_jumpForce;
     position.y += velocity.y * dt;
     isOnGround = false;
@@ -412,9 +412,8 @@ class Player extends SpriteAnimationGroupComponent
   // let player move
 
   void _respawn() async {
-
-    //hit sound 
-    if (game.playSounds)  FlameAudio.play('hit.wav', volume: game.soundVolume);
+    //hit sound
+    if (game.playSounds) FlameAudio.play('hit.wav', volume: game.soundVolume);
     // move duration
     const canMoveDuration = Duration(milliseconds: 400);
 
@@ -516,7 +515,7 @@ class Player extends SpriteAnimationGroupComponent
 
       // goto starting dungeon level
       const waitToChangeduration = Duration(seconds: 3);
-      Future.delayed(waitToChangeduration, () => {game.loadNextLevel()});
+      Future.delayed(waitToChangeduration, () => {game.loadDungeonLevel()});
     }
 
     // if (overDoor = true) {

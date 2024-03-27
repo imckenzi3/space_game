@@ -5,6 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:pixel_adventure/components/dungeonLevel.dart';
 // import 'package:flutter/painting.dart';
 import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
@@ -39,12 +40,89 @@ class PixelAdventure extends FlameGame
   // list of levels we have
   List<String> levelNames = ['level-01', 'level-02', 'level-03', 'level-04'];
 
-  // fill list of generatedNames with levels from randomly generated rooms
-  // player can then navigate random rooms
+  // list of generated room names based on floorplan
   List<String> generatedNames = [];
+
+  final List<int> rooms = [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89
+  ];
 
   // ref to level we are on
   int currentLevelIndex = 0;
+
+  // ref to Dungeon level we are on
+  int currentDungeonLevelIndex = 0;
 
   // sounds
   bool playSounds = false;
@@ -52,23 +130,26 @@ class PixelAdventure extends FlameGame
 
   @override
   FutureOr<void> onLoad() async {
-    // load all images into chache
-    // if alot of images can cause issues.
+    // Load all images into cache
     await images.loadAllImages();
 
-    // call when we want to goto next level
+    // Generate room names based on randomly generated rooms
+    generateRoomNames();
+
+    //   // Initialize the Floorplan class to generate room IDs
+    // Floorplan floorplan = Floorplan();
+    // generatedNames = floorplan.generateRoomIDs();
+
+    // Call when we want to go to the next level
     _loadlevel();
 
+    // Add joystick and jump button if needed
     if (showControls) {
-      // add joyStick
       addJoystick();
-      // add jumpButton
       add(JumpButton());
     }
 
-    // score
-
-    // Create text component for player score.
+    // Add player score text component
     _playerScore = TextComponent(
       text: 'Score: 0',
       position: Vector2(10, 10),
@@ -82,12 +163,9 @@ class PixelAdventure extends FlameGame
     );
     add(_playerScore);
 
-    // health bar
-    // game start health 100%
+    // Add player health text component
     _playerHealth = TextComponent(
       text: 'Health: 100%',
-
-      // health bar location
       position: Vector2(size.x - 40, 25),
       textRenderer: TextPaint(
         style: const TextStyle(
@@ -101,6 +179,18 @@ class PixelAdventure extends FlameGame
     add(_playerHealth);
 
     return super.onLoad();
+  }
+
+  void generateRoomNames() {
+    // Clear existing generated names
+    generatedNames.clear();
+
+    // Generate room names based on randomly generated rooms
+    for (int i = 0; i < levelNames.length; i++) {
+      // Assuming a basic format for room names
+      String roomName = 'Room ${i + 1}';
+      generatedNames.add(roomName);
+    }
   }
 
   // check where joystick is currently positioned
@@ -227,5 +317,49 @@ class PixelAdventure extends FlameGame
 
     // // load cam first then world
     // addAll([cam, world]);
+  }
+
+  void loadDungeonLevel() {
+    removeWhere((component) => component is DungeonLevel);
+    // increase level
+    if (currentDungeonLevelIndex < generatedNames.length - 1) {
+      currentDungeonLevelIndex++;
+
+      // prints current level
+      debugPrint('Current dungeon level: $currentDungeonLevelIndex');
+
+      _loadDungeonlevel();
+    } else {
+      // no more levels
+
+      // when you get back to the end level
+      // goto the first level - no restarting game
+      currentDungeonLevelIndex = 0;
+      _loadDungeonlevel();
+    }
+  }
+
+  void _loadDungeonlevel() {
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        DungeonLevel world = DungeonLevel(
+          player: player,
+          levelName: generatedNames[currentDungeonLevelIndex],
+          rooms: [],
+        );
+
+        // creates cam component w/ fix resolution
+        cam = CameraComponent.withFixedResolution(
+          world: world,
+          width: 650,
+          height: 360,
+        );
+        cam.viewfinder.anchor = Anchor.topLeft;
+
+        // load cam first then world
+        addAll([cam, world]);
+      },
+    );
   }
 }

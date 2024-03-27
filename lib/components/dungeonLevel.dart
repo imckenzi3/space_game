@@ -11,75 +11,40 @@ import 'package:pixel_adventure/components/spike.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
-class Level extends World with HasGameRef<PixelAdventure> {
-  final String levelName;
+class DungeonLevel extends World with HasGameRef<PixelAdventure> {
+  final List<int> rooms;
   final Player player;
 
-  // static level
-  Level({required this.levelName, required this.player});
+  DungeonLevel(
+      {required this.rooms, required this.player, required String levelName});
 
-  // tiles
   late TiledComponent level;
-
-  // Collisions
   List<CollisionBlock> collisionBlocks = [];
 
   @override
   FutureOr<void> onLoad() async {
-    // calls the level - was spawning level 1 each time
-    level = await TiledComponent.load('$levelName.tmx', Vector2.all(24),
-        priority: -1);
+    generateLevelName(rooms); // Generating levelName from rooms
 
-    // add level to game
+    level = await TiledComponent.load('', Vector2.all(24), priority: -1);
     add(level);
 
-    // scrolling background
-    // _scrollingBackground();
-
-    // spawning objects
-    _spawningObjects();
-
-    // add object collisions
-    _addCollisions();
+    // _spawningObjects();
+    // _addCollisions();
 
     return super.onLoad();
   }
 
-  // background
-  // void _scrollingBackground() {
-  //   // get access to background layers
-  //   final backgroundLayer = level.tileMap.getLayer('Background');
-
-  //   if (backgroundLayer != null) {
-  //     final backgroundColor =
-  //         backgroundLayer.properties.getValue('BackgroundColor');
-
-  //     final backgroundTile = BackgroundTile(
-  //       color: backgroundColor ?? 'background_layer_1',
-  //       position: Vector2(0, 0),
-  //     );
-
-  //     add(backgroundTile);
-  //   }
-  // }
-
-  // spawning objects
   void _spawningObjects() {
-    //grab spawn layer
     final spawnPointsLayer = level.tileMap.getLayer<ObjectGroup>('Spawnpoints');
 
     if (spawnPointsLayer != null) {
-      // checks for spawn points
       for (final spawnPoint in spawnPointsLayer.objects) {
         switch (spawnPoint.class_) {
-          //spawn player
           case 'Player':
             player.position = Vector2(spawnPoint.x, spawnPoint.y);
-            // spawn player right way
             player.scale.x = 1;
             add(player);
             break;
-          //spawn coins
           case 'Coin':
             final coin = Coin(
               coin: spawnPoint.name,
@@ -88,7 +53,6 @@ class Level extends World with HasGameRef<PixelAdventure> {
             );
             add(coin);
             break;
-          //
           case 'Spike':
             final spike = Spike(
               position: Vector2(spawnPoint.x, spawnPoint.y + 12),
@@ -97,7 +61,6 @@ class Level extends World with HasGameRef<PixelAdventure> {
             add(spike);
             break;
           case 'Saw':
-            //  get access to properties
             final isVertical = spawnPoint.properties.getValue('isVertical');
             final offNeg = spawnPoint.properties.getValue('offNeg');
             final offPos = spawnPoint.properties.getValue('offPos');
@@ -111,29 +74,27 @@ class Level extends World with HasGameRef<PixelAdventure> {
             );
             add(saw);
             break;
-          // spawn door
           case 'Door':
             final door = Door(
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
             add(door);
-          // spawn dungeon door
+            break;
           case 'Dungeon':
             final dungeon = DungeonDoor(
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
             add(dungeon);
+            break;
           default:
         }
       }
     }
   }
 
-  // add object collisions
   void _addCollisions() {
-    // Collision
     final collisionsLayer = level.tileMap.getLayer<ObjectGroup>('Collisions');
 
     if (collisionsLayer != null) {
@@ -147,8 +108,6 @@ class Level extends World with HasGameRef<PixelAdventure> {
             );
 
             collisionBlocks.add(platform);
-
-            // see collision block on screen
             add(platform);
             break;
           default:
@@ -163,5 +122,10 @@ class Level extends World with HasGameRef<PixelAdventure> {
     }
 
     player.collisionBlocks = collisionBlocks;
+  }
+
+  // Function to generate levelName from rooms
+  String generateLevelName(List<int> rooms) {
+    return rooms.map((room) => room.toString()).join('_');
   }
 }
